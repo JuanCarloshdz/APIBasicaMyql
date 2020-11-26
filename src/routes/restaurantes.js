@@ -200,6 +200,7 @@ router.get('/:lat/:long/:radio', (req, res) => {
         if (!err) {
             res.json(rows[0][0]);
         } else {
+            res.json({"status":" Error al calcular  estadisticas"})
             console.log(err);
         }
     });
