@@ -55,8 +55,6 @@ router.post('/', (req, res) => {
     const { id, rating, name, site, email, phone, street, city, state, lat, lng } = req.body;
 
 
-    //console.log(typeof (rating))
-    //console.log(Number.isInteger(rating) ? 'si' : 'no')
     if (!Number.isInteger(rating)) {
         res.json({ 'status': 'Error valor ingresado' });
     } else {
@@ -103,6 +101,59 @@ router.post('/', (req, res) => {
 });
 
 
+//Actualizar registros de la DB
+//todos los parametros son enviados desde body, 
+//no se puede modificar el id del restaurant  
+router.put('/', (req, res) => {
+    const { id, rating, name, site, email, phone, street, city, state, lat, lng } = req.body;
+
+
+    if (!Number.isInteger(rating)) {
+        res.json({ 'status': 'Error valor ingresado' });
+    } else {
+        if (rating >= 0 && rating <= 4) {
+            const Con = require('../database')
+            Con.query('SELECT  count(*) as cuenta FROM restaurants WHERE id = ?;', [id], (err, rows, fields) => {
+                if (!err) {
+                    //console.log(rows[0].cuenta)
+                    if (rows[0].cuenta == 0) {
+                        res.json({ 'status': 'error la id no Existe' });
+                    } else {
+
+                        const query = `
+                            CALL addOrEditRestaurant(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?); `;
+                        mySqlCon.query(query,
+                            [id,
+                                rating,
+                                name,
+                                site,
+                                email,
+                                phone,
+                                street,
+                                city,
+                                state,
+                                lat,
+                                lng
+                            ], (err, rows, fields) => {
+                                if (!err) {
+                                    res.json({ 'status': 'restaurant Updated', id });
+                                } else {
+                                    console.log(err);
+                                }
+                            });
+
+                    }
+                } else {
+                    res.json({ 'status': "error en la consulta" })
+                    console.log(err)
+                }
+            });
+        } else {
+            res.json({ 'status': 'Valor Fuera de rango' });
+        }
+    }
+
+});
 
 
 module.exports = router;
