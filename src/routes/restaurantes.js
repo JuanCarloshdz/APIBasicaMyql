@@ -186,6 +186,26 @@ router.delete('/:id', (req, res) => {
 
 })
 
+// Segunda tarea  
+// recupera el numero de restaurantes apartir de  longitud ,  latitud y el radio 
+router.get('/:lat/:long/:radio', (req, res) => {
+
+    const { lat, long, radio } = req.params;
+
+    const query = `
+      CALL obtenerStadisticas(?, ?, ?);
+    `;
+    mySqlCon.query(query, 
+        [lat, long,  radio], (err, rows, fields) => {
+        if (!err) {
+            res.json(rows[0][0]);
+        } else {
+            console.log(err);
+        }
+    });
+
+});
+
 
 
 module.exports = router;
