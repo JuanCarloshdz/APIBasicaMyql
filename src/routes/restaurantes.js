@@ -155,5 +155,37 @@ router.put('/', (req, res) => {
 
 });
 
+//eliminar registros
+router.delete('/:id', (req, res) => {
+    const { id } = req.params;
+    //console.log(req.params);
+
+    const Con = require('../database')
+    
+    Con.query('SELECT  count(*) as cuenta FROM restaurants WHERE id = ?;', [id], (err, rows, fields) => {
+        if (!err) {
+            //console.log(rows[0].cuenta)
+            if (rows[0].cuenta == 0) {
+                res.json({ 'status': 'error la id no Existe' });
+            } else {
+                mySqlCon.query('call deleteRestauran ( ? )', [id], (err, rows, fields) => {
+                    if (!err) {
+                        res.json({ status: 'Restaurant deleted', id });
+                    } else {
+                        console.log(err);
+                    }
+                });
+            }
+        } else {
+            res.json({ 'status': "error en la consulta" })
+            console.log(err)
+        }
+    });
+
+
+
+})
+
+
 
 module.exports = router;
