@@ -8,7 +8,7 @@ app.set('port', process.env.PORT || 3000)
 app.use(express.json())
 
 //routes
-//app.use(require('./routes/restaurantes'))
+app.use(require('./routes/restaurantes'))
 app.listen(app.get('port'), ()=>{
 
     console.log('Server on port ' + app.get('port'));
