@@ -11,8 +11,8 @@ const mySqlCon =mysql.createConnection({
 mySqlCon.connect( function (err){
 
     if(err){
-        console.log(err);
-        return
+        console.error('error connecting: ' + err.stack);
+        return;
 
     }else{
         console.log('Db is conected')
