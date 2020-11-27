@@ -4,7 +4,8 @@
   "description": "Version simple API mysql",
   "main": "src/index.js",
   "scripts": {
-    "start": "node src/index.js"
+    "start": "node src/index.js",
+    "heroku-postbuild":"NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
   },
   "author": "Juan Carlos Hernandez Marin",
   "license": "ISC",
