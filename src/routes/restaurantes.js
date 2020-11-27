@@ -167,6 +167,7 @@ router.delete('/:id', (req, res) => {
             //console.log(rows[0].cuenta)
             if (rows[0].cuenta == 0) {
                 res.json({ 'status': 'error la id no Existe' });
+                
             } else {
                 mySqlCon.query('call deleteRestauran ( ? )', [id], (err, rows, fields) => {
                     if (!err) {
