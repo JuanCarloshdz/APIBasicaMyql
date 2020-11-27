@@ -2,7 +2,7 @@
 
 ## Contenido del repositorio
 
-Este repositorio contiene contiene las siguientes carpetas:
+Este repositorio contiene las siguientes carpetas:
 *   DB. Esta carpeta contiene un backup de la base de datos montada en heroku
 *   src. Esta carpeta contiene los archivos necesarios para el servidor
 
@@ -74,38 +74,38 @@ El respaldo de la base de datos solo tiene la tabla <strong>restaurants</strong>
 	
 </table>
 
-*   <strong>Nota.-</strong> los atributps lat y lng representan la latitud y la longitud geografica donde se encuentra el restaurante
+*   <strong>Nota.-</strong> Los atributos  <strong>lat</strong> y <strong>lng</strong> representan la latitud y la longitud geografica donde se encuentra el restaurante
 
 ## Contenido de la base de datos
 
-Esta carpeta contiene todos los archivos necesarios para la ejecucion del servidor en de express el cual se encuentra montado en el host de heroku estos archivos se muestran a continuacion:
+Esta carpeta contiene todos los archivos necesarios para la ejecución del servidor en express el cual se encuentra montado en el host de heroku, los nombres y la descripción de los archivos se muestran a continuación:
 
-*   <strong>index.js,</strong> este archivo tiene como finalidad inicializar el entorno de ejecucion del servidor
-*   <strong>database.js,</strong>la finalidad de este archivo establecer una conecion a la base de datos la cual mediante un addons de heroku podra ser manipulada
-*   <strong>restaurantes.js,</strong> este archivo se encuentra dentro de la carpeta routes. esta carpeta tiene como finalidad ser el directorio donde se almacenaran los microservicios del servidor( actualmente solo tiene las rutas creadas para la manipulacion de la informacion de los restaurantes)
+*   <strong>index.js,</strong> este archivo tiene como finalidad inicializar el entorno de ejecución del servidor.
+*   <strong>database.js,</strong> la finalidad de este archivo establecer una conexión a la base de datos la cual mediante un addons de heroku podrá ser manipulada.
+*   <strong>restaurantes.js,</strong> este archivo se encuentra dentro de la carpeta <strong>routes</strong>. Esta carpeta tiene como finalidad ser el directorio donde se almacenaran los micro servicios del servidor (actualmente solo tiene las rutas creadas para la manipulación de la información de los restaurantes)
 
 ## Descripcion de la API restaurantes (restaurantes.js)
 
-Esta seccion se describira en las siguientes partes las cuales estan clasificadas por tipos de peticion: <strong>a)GET;, b)POST;, c)UPDATE</strong> Y finalmente <strong>d)DELETE.</strong> 
-por otro lado tenemos que se implementaron en total 7 end points <br />
+En esta sección se describirá en las siguientes subsecciones las cuales están clasificadas por tipos de petición:<strong>a)GET;, b)POST;, c)PUT y d)UPDATE</strong> Y finalmente <strong>d)DELETE.</strong> 
+Por otro lado tenemos que se implementaron en total 7 endpoints. <br />
 
 
 
 ### `Peticiones GET`
 
-Estas peticiones tiene como finalidad hacer la recuperacion de la informacion de la base de datos, en esta api se implementaron 4, las urls para aceder se muestran y se describen a continuacion:
-*   <strong>/,</strong> esta url tiene como finalidad hacer la recuperacion de la informacion de los restaurantes almacenados en la base de datos
-*   <strong>/:id,</strong> la finalidad de esta url es hacer la recuperacion del restaurante que pertenesca a la id envidad como parametro al servidor
-*   <strong>/valida/:id,</strong> esta url se hizo con la finalidad de validar la id que se manda como parametro desde el frontend para evitar confiltos en la base de datos
-*   <strong>/:lat/:long/:radio,</strong>esta url tiene como finalidad generar una estadistico apartir de los parametros: a) latitud;, b)longitud; y  c) un radio definido en metros, los cuales son pasados como parametros y como resultado se obtiene elnumero de restaurantes cercanos a la ubicacion, asi como tambien el promedio y la desviacion estandar del raiting de los restaurantes cercanos.
+Estas peticiones tiene como finalidad hacer la recuperación de la información almacenada en la base de datos, en esta api se implementaron 4 URL’S, las cuales se muestran y se describen a continuación:
+*   <strong>/,</strong> esta URL tiene como finalidad hacer la recuperación de la información de los restaurantes almacenados en la base de datos.
+*   <strong>/:id,</strong> la finalidad de esta URL es hacer la recuperación de la información asociada al restaurante perteneciente al id enviada desde la petición.
+*   <strong>/valida/:id,</strong> esta URL se hizo con la finalidad de validar la id que se manda como parámetro desde el frontend para evitar confitos en la base de datos.
+*   <strong>/:lat/:long/:radio,</strong>URL tiene como propósito generar una estadístico a partir de los parámetros: a) latitud;, b)longitud; y  c) un radio definido en metros, los cuales son pasados como parámetros y como resultado se obtiene el número de restaurantes cercanos a la ubicación, así como también el promedio y la desviación estándar del <strong>raiting</strong> de los restaurantes cercanos.
 
 
 ### `Peticion POST`
 
-El endpoint implementado tiene como finalidad darde alta un restaurante con informacion nueva, los parametros son pasados atravez del del request de la peticion atravez de un JSON con las siguientes caracteristicas:<br />
-<strong>
-		{
-		"id":       "", 
+El endpoint implementado tiene como finalidad dar de alta un restaurante con información nueva, los parámetros son pasados a través del request de la petición del  JSON con las siguientes características:<br />
+<strong>:
+{
+    "id":       "", 
     "rating":   0, 
     "name":     "", 
     "site":     "", 
@@ -119,33 +119,32 @@ El endpoint implementado tiene como finalidad darde alta un restaurante con info
 		}
 </strong>
 <br />
-Una de las validaciones implementadas en esta url consistio en que si la <strong>id</strong> proporcionada por el JSON ya se encuentra registrada retorne como resultado el siguiente JSON<br />
+Una de las validaciones implementadas en esta url consistió en que si la <strong>id</strong> proporcionada por el JSON ya se encuentra registrada retorne como resultado el siguiente JSON:<br />
 <strong>{ 'status': 'error ya existe la id' }</strong>
 <br />
 <br />
-Otra de las urls implementadas consistito en que el raiting propocionado por el JSON fuera un numero en caso de que este no fuera un numero retrona como respuesta el siguiente
-JSON:
+Otra de las validaciones implementadas consistió en que el <strong>raiting</strong> proporcionado por el JSON fuera un número, en caso de que este no fuera un número retorna como respuesta el siguiente JSON:
 <br />
 <Strong>
 { 'status': 'Error valor ingresado' }
 </strong>
 <br />
 <br />
-Ademas, tambien se valido que el rating proporcionado por el JSON este entre los valores 0 y 4, en caso de no ser asi la url retorna como resultado el siguiente JSON:
+Además, también se validó que el rating proporcionado por el JSON este entre los valores 0 y 4, en caso de no ser así la URL retorna como resultado el siguiente JSON:
 <br />
 <strong>
 { 'status': 'Valor Fuera de rango' }
 </strong>
 <br />
 <br />
-En caso del que JSON pase estas validaciones la informacion contenida en el JSON es almacenada en la base de datos y retorna un JSON con las siguientes caracteristicas:
+En caso del que JSON pase estas validaciones la información contenida en el JSON es almacenada en la base de datos y retorna un JSON con las siguientes características:
 <br />
 <strong>
 { 'status': 'restaurant Saved', id }
 </strong>
 <br />
 <br />
-en caso de que la conexion de la base de datos se pierda en algun momento se retornara el siguiente JSON:
+En caso de que la conexión de la base de datos se pierda en algún momento se retornara el siguiente JSON:
 <br />
 <strong>
 { 'status': "error en la consulta"  }
@@ -155,23 +154,21 @@ en caso de que la conexion de la base de datos se pierda en algun momento se ret
 
 ### `Peticion PUT`
 
-ESta peticion tiene como finalidad modificar un registro en la base de datos, esta url tiene las mismas validaciones que la url de la Peticion POST asi como tambien la misma estructura,
-en caso de que la informacion sea actualizada el JSON que se retorna es el siguiente
+Esta petición tiene como finalidad modificar un registro en la base de datos, esta URL tiene las mismas validaciones que la URL de la petición POST así como también la misma estructura, en caso de que la información sea actualizada, el JSON que se retorna es el siguiente:
 <br />
 <strong>
 { 'status': 'restaurant Saved', id   }
 </strong>
 <br />
 <br />
-Donde el id es el parametro proporcionado por el JSON
+Donde el id es el parámetro proporcionado por el JSON
 
 ### `Peticion DELETE`
-Esta peticion tiene como finalidad eliminar un registro en la base de datos esta url tiene solo la validacion del que el id pasado como parametro exitista en la base de datos. Por otro lado en caso de que la eliminacion se realice de manera correcta 
-se retorna el siguiente JSON: 
+Esta petición tiene como finalidad eliminar un registro en la base de datos esta URL tiene solo la validación del que el id pasado como parámetro exitista en la base de datos. Por otro lado en caso de que la eliminación se realice de manera correcta se retorna el siguiente JSON:
 <br />
 <strong>
 { status: 'Restaurant deleted', id   }
 </strong>
 <br />
 <br />
-Donde el id corresponde al parametro enviado desde la peticion.
+Donde el id corresponde al parámetro enviado desde la petición.
